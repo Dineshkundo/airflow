@@ -9,3 +9,4 @@ output "cloudsql_connection_name" {
 output "bucket_name" {
   value = module.gcs_bucket.bucket_name
 }
+
