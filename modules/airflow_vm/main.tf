@@ -21,7 +21,7 @@ resource "google_compute_instance" "airflow_vm" {
   }
 
   metadata = {
-    ssh-keys = "your-username:${file("${path.module}/airflow_vm_key.pub")}"
+    #ssh-keys = "your-username:${file("${path.module}/airflow_vm_key.pub")}"
   }
 
   provisioner "file" {
