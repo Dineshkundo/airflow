@@ -29,12 +29,6 @@ jobs:
           workload_identity_provider: "projects/705721562660/locations/global/workloadIdentityPools/airflow/providers/airflow-git"
           service_account: "airflow@adq-get-project.iam.gserviceaccount.com"
 
-      - name: Debug Access Token Identity (Optional)
-        run: |
-          TOKEN=$(gcloud auth print-access-token)
-          echo "Decoded identity:"
-          curl -s "https://oauth2.googleapis.com/tokeninfo?access_token=$TOKEN"
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
