@@ -2,12 +2,12 @@ name: 'Terraform'
 
 on:
   push:
-    branches: [ "main" ]  # Removed spaces around "main"
+    branches: [ "main" ]
   pull_request:
 
 permissions:
   contents: read
-  id-token: write  # Required for Workload Identity Federation
+  id-token: write
 
 jobs:
   terraform:
@@ -24,18 +24,22 @@ jobs:
 
       - name: Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v2.0.0
         with:
           workload_identity_provider: "projects/705721562660/locations/global/workloadIdentityPools/airflow/providers/airflow-git"
           service_account: "airflow@adq-get-project.iam.gserviceaccount.com"
 
-      - name: Debug who is authenticated
+      - name: Debug Access Token Identity (Optional)
         run: |
-          gcloud auth list
-          gcloud config get-value account
+          TOKEN=$(gcloud auth print-access-token)
+          echo "Decoded identity:"
+          curl -s "https://oauth2.googleapis.com/tokeninfo?access_token=$TOKEN"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.5.7  # optional, set your required version
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform Init
         run: terraform init
@@ -44,4 +48,5 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve tfplan
