@@ -27,7 +27,7 @@ jobs:
         uses: google-github-actions/auth@v2.0.0
         with:
           workload_identity_provider: "projects/705721562660/locations/global/workloadIdentityPools/airflow/providers/airflow-git"
-          service_account: "airflow-945@adq-get-project.iam.gserviceaccount.com"
+          service_account: "airflow@adq-get-project.iam.gserviceaccount.com"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
