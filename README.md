@@ -1,4 +1,3 @@
-
 # 🚀 Airflow Setup Script for GCP Environment
 
 This script automates the installation and setup of **Apache Airflow** on a Linux VM (Debian/Ubuntu) for use with **Google Cloud SQL** and **Secret Manager**.
